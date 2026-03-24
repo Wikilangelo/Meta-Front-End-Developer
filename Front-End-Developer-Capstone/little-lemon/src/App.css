@@ -6,63 +6,121 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #fdfdfd;
+  background-color: #f8f8f8;
   color: #333;
+}
+
+a {
+  text-decoration: none;
 }
 
 .header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 24px;
   background-color: #495e57;
-}
-
-.logo {
-  width: 180px;
-  height: auto;
+  color: white;
 }
 
 .nav {
   background-color: #f4ce14;
-  padding: 15px 0;
+  padding: 16px 20px;
 }
 
 .nav-list {
+  list-style: none;
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 24px;
-  list-style: none;
   flex-wrap: wrap;
 }
 
 .nav-list a {
-  text-decoration: none;
   color: #333;
   font-weight: bold;
 }
 
 .main {
   min-height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
 }
 
-.hero {
-  text-align: center;
+.cta {
+  background-color: #495e57;
+  color: white;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.cta-text {
   max-width: 700px;
 }
 
-.hero h1 {
-  font-size: 2.5rem;
+.cta h1 {
+  font-size: 3rem;
+  color: #f4ce14;
+}
+
+.cta h2 {
+  font-size: 2rem;
   margin-bottom: 16px;
 }
 
-.hero p {
-  font-size: 1.1rem;
+.cta p {
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.button-link {
+  display: inline-block;
+  background-color: #f4ce14;
+  color: black;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.specials,
+.testimonials,
+.chicago,
+.booking-page {
+  padding: 48px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.specials h2,
+.testimonials h2,
+.chicago h2,
+.booking-page h1 {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.specials-grid,
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  line-height: 1.5;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+}
+
+.chicago p {
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
 
 .footer {
@@ -74,18 +132,73 @@ body {
   color: white;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .nav-list {
     flex-direction: column;
     gap: 12px;
   }
 
-  .hero h1 {
-    font-size: 2rem;
+  .cta h1 {
+    font-size: 2.2rem;
   }
 
-  .logo {
-    width: 140px;
+  .cta h2 {
+    font-size: 1.5rem;
   }
+
+  .specials-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.booking-page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.booking-page h1 {
+  margin-bottom: 16px;
+}
+
+.booking-page p {
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.booking-form {
+  display: grid;
+  max-width: 320px;
+  gap: 20px;
+  margin: 0 auto;
+  text-align: left;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.booking-form label {
+  font-weight: bold;
+}
+
+.booking-form input,
+.booking-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.booking-form input[type='submit'] {
+  background-color: #f4ce14;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.booking-form input[type='submit']:hover {
+  opacity: 0.9;
 }
