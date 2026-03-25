@@ -1,13 +1,6 @@
 import BookingForm from "./BookingForm";
 
-function BookingPage({ availableTimes, dispatch }) {
-  const handleSubmitForm = (formData) => {
-    // Implementazione temporanea della funzione submitForm
-    console.log("Form submitted:", formData);
-    alert("Prenotazione effettuata con successo!");
-    return true;
-  };
-
+function BookingPage({ availableTimes, dispatch, submitForm }) {
   return (
     <section className="booking-page">
       <h1>Prenota un tavolo</h1>
@@ -16,7 +9,7 @@ function BookingPage({ availableTimes, dispatch }) {
       <BookingForm
         availableTimes={availableTimes}
         dispatch={dispatch}
-        submitForm={handleSubmitForm}
+        submitForm={submitForm}
       />
     </section>
   );

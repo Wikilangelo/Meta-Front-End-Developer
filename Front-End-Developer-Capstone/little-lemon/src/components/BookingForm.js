@@ -6,6 +6,8 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
   const [occasion, setOccasion] = useState("Birthday");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   // Carica gli orari di oggi quando il componente monta
   useEffect(() => {
@@ -29,8 +31,10 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     setTime("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError("");
 
     const formData = {
       date,
@@ -39,7 +43,18 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
       occasion,
     };
 
-    submitForm(formData);
+    try {
+      const success = await submitForm(formData);
+      if (!success) {
+        setSubmitError("Errore durante la prenotazione. Riprova più tardi.");
+      }
+    } catch (error) {
+      setSubmitError(
+        "Errore durante la prenotazione. Verifica la connessione.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -115,7 +130,25 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         </select>
       </div>
 
-      <button type="submit">Make Your reservation</button>
+      {submitError && (
+        <div
+          className="error-message"
+          style={{ color: "red", margin: "10px 0" }}
+        >
+          {submitError}
+        </div>
+      )}
+
+      <button
+        type="submit"
+        disabled={isSubmitting || !date || !time}
+        style={{
+          opacity: isSubmitting || !date || !time ? 0.6 : 1,
+          cursor: isSubmitting || !date || !time ? "not-allowed" : "pointer",
+        }}
+      >
+        {isSubmitting ? "Elaborando..." : "Make Your reservation"}
+      </button>
     </form>
   );
 }
