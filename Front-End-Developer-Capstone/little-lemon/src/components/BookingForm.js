@@ -35,6 +35,24 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     setIsSubmitting(true);
     setSubmitError("");
 
+    if (!date) {
+      setSubmitError("Please select a date.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!time) {
+      setSubmitError("Please select a time.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (guests < 1 || guests > 10) {
+      setSubmitError("Number of guests must be between 1 and 10.");
+      setIsSubmitting(false);
+      return;
+    }
+
     const formData = {
       date,
       time,
@@ -65,6 +83,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
           type="date"
           id="res-date"
           value={date}
+          min={new Date().toISOString().split("T")[0]}
           onChange={handleDateChange}
           required
         />

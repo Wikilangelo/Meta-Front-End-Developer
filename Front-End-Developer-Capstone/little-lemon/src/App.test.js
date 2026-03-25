@@ -1,15 +1,10 @@
-import { render, screen } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App'
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders booking link', () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-  )
+test("renders reserve a table link", () => {
+  render(<App />);
 
   expect(
-    screen.getByRole('link', { name: /prenota un tavolo/i }),
-  ).toBeInTheDocument()
-})
+    screen.getByRole("link", { name: /reserve a table/i }),
+  ).toBeInTheDocument();
+});
