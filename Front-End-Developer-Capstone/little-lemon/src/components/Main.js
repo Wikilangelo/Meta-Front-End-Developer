@@ -1,19 +1,29 @@
-import { Routes, Route } from 'react-router-dom'
-import { useReducer } from 'react'
-import HomePage from './HomePage'
-import BookingPage from './BookingPage'
+import { Routes, Route } from "react-router-dom";
+import { useReducer } from "react";
+import HomePage from "./HomePage";
+import BookingPage from "./BookingPage";
 
 export function initializeTimes() {
-  const today = new Date()
-  return window.fetchAPI(today)
+  const today = new Date();
+  // Controlla se fetchAPI è disponibile prima di usarla
+  if (window.fetchAPI && typeof window.fetchAPI === "function") {
+    return window.fetchAPI(today);
+  }
+  // Fallback con orari predefiniti se fetchAPI non è ancora caricata
+  return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
 }
 
 export function updateTimes(state, action) {
   switch (action.type) {
-    case 'UPDATE_TIMES':
-      return window.fetchAPI(new Date(action.date))
+    case "UPDATE_TIMES":
+      // Controlla se fetchAPI è disponibile
+      if (window.fetchAPI && typeof window.fetchAPI === "function") {
+        return window.fetchAPI(new Date(action.date));
+      }
+      // Fallback con orari predefiniti
+      return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
     default:
-      return state
+      return state;
   }
 }
 
@@ -22,7 +32,7 @@ function Main() {
     updateTimes,
     [],
     initializeTimes,
-  )
+  );
 
   return (
     <main className="main">
@@ -40,7 +50,7 @@ function Main() {
         <Route path="/contact" element={<h1>Contatti</h1>} />
       </Routes>
     </main>
-  )
+  );
 }
 
-export default Main
+export default Main;

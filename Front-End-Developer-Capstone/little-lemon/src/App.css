@@ -192,13 +192,38 @@ a {
   font-size: 1rem;
 }
 
-.booking-form input[type='submit'] {
+.booking-form input[type="submit"] {
   background-color: #f4ce14;
   border: none;
   font-weight: bold;
   cursor: pointer;
 }
 
-.booking-form input[type='submit']:hover {
+.booking-form input[type="submit"]:hover {
   opacity: 0.9;
+}
+
+.booking-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 20px;
+}
+
+.booking-slot {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.booking-slot.selected {
+  border-color: #495e57;
+  background: #495e57;
+  color: white;
+}
+
+.booking-slot:hover {
+  border-color: #495e57;
 }
