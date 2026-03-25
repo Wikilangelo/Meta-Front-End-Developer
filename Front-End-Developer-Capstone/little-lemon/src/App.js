@@ -1,18 +1,32 @@
-import './App.css'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Main from './components/Main'
-import Footer from './components/Footer'
+import "./styles/global.css";
+import "./styles/layout.css";
+import "./styles/home.css";
+import "./styles/booking.css";
+
+import { BrowserRouter } from "react-router-dom";
+import { useReducer } from "react";
+import Layout from "./components/layout/Layout";
+import AppRoutes from "./routes/AppRoutes";
+import { initializeTimes, updateTimes, submitForm } from "./utils/booking";
 
 function App() {
+  const [availableTimes, dispatch] = useReducer(
+    updateTimes,
+    [],
+    initializeTimes,
+  );
+
   return (
-    <>
-      <Header />
-      <Nav />
-      <Main />
-      <Footer />
-    </>
-  )
+    <BrowserRouter>
+      <Layout>
+        <AppRoutes
+          availableTimes={availableTimes}
+          dispatch={dispatch}
+          submitForm={submitForm}
+        />
+      </Layout>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

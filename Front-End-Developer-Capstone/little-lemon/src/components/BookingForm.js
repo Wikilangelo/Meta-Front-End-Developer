@@ -9,26 +9,25 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  // Carica gli orari di oggi quando il componente monta
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
+
     dispatch({
       type: "UPDATE_TIMES",
       date: today,
     });
-  }, []); // Esegue solo al mount
+  }, [dispatch]);
 
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     setDate(selectedDate);
+    setTime("");
 
     dispatch({
       type: "UPDATE_TIMES",
       date: selectedDate,
     });
-
-    setTime("");
   };
 
   const handleSubmit = async (e) => {
@@ -45,13 +44,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
 
     try {
       const success = await submitForm(formData);
+
       if (!success) {
-        setSubmitError("Errore durante la prenotazione. Riprova più tardi.");
+        setSubmitError(
+          "There was a problem with your reservation. Please try again.",
+        );
       }
     } catch (error) {
-      setSubmitError(
-        "Errore durante la prenotazione. Verifica la connessione.",
-      );
+      setSubmitError("Connection error. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -59,7 +59,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
 
   return (
     <form className="booking-form" onSubmit={handleSubmit}>
-      <div>
+      <div className="form-field">
         <label htmlFor="res-date">Choose date</label>
         <input
           type="date"
@@ -70,7 +70,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         />
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="res-time">Choose time</label>
         <select
           id="res-time"
@@ -87,8 +87,11 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         </select>
       </div>
 
-      <div>
-        <p>Available booking slots ({availableTimes.length} available)</p>
+      <div className="form-field">
+        <p className="slots-title">
+          Available booking slots ({availableTimes.length})
+        </p>
+
         <div className="booking-slots">
           {availableTimes.length > 0 ? (
             availableTimes.map((availableTime) => (
@@ -100,12 +103,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
               />
             ))
           ) : (
-            <p>Nessun orario disponibile. Seleziona una data.</p>
+            <p className="empty-state">
+              No times available. Please choose another date.
+            </p>
           )}
         </div>
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="guests">Number of guests</label>
         <input
           type="number"
@@ -118,7 +123,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         />
       </div>
 
-      <div>
+      <div className="form-field">
         <label htmlFor="occasion">Occasion</label>
         <select
           id="occasion"
@@ -130,24 +135,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
         </select>
       </div>
 
-      {submitError && (
-        <div
-          className="error-message"
-          style={{ color: "red", margin: "10px 0" }}
-        >
-          {submitError}
-        </div>
-      )}
+      {submitError && <p className="error-message">{submitError}</p>}
 
       <button
         type="submit"
+        className="btn btn-primary submit-btn"
         disabled={isSubmitting || !date || !time}
-        style={{
-          opacity: isSubmitting || !date || !time ? 0.6 : 1,
-          cursor: isSubmitting || !date || !time ? "not-allowed" : "pointer",
-        }}
       >
-        {isSubmitting ? "Elaborando..." : "Make Your reservation"}
+        {isSubmitting ? "Processing..." : "Make Your Reservation"}
       </button>
     </form>
   );
